@@ -1,6 +1,16 @@
 import { useState } from "react"
 
-const questions = [
+interface AnswerOption {
+  answertext: string
+  isCorrect: boolean
+}
+interface Question {
+  questionText: string,
+  answerOptions: AnswerOption[]
+}
+
+
+const questions: Question[] = [
   {
     questionText: 'what is the capital of france?',
     answerOptions: [
@@ -69,13 +79,13 @@ const questions = [
 ]
 
 const App = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [answered, setAnswered] = useState(false)
-  const [selectedAnswer, setSelectedAnswer] = useState(null)
-  const [score, setScore] = useState(0)
-  const [showScore, setShowScore] = useState(false)
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0)
+  const [answered, setAnswered] = useState<boolean>(false)
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
+  const [score, setScore] = useState<number>(0)
+  const [showScore, setShowScore] = useState<boolean>(false)
 
-  const handleAnswerOption = (index, isCorrect) => {
+  const handleAnswerOption = (index: number, isCorrect: boolean) => {
     setAnswered(true)
     setSelectedAnswer(index)
     if (isCorrect) {
@@ -121,7 +131,7 @@ const App = () => {
             ))}
             </div>
             <button className={`block w-full ${answered ? "bg-green-500" : "bg-green-300"}  text-white p-2 rounded cursor-pointer`}
-              onClick={NextQuestion} disabled={answered ? "" : "disabled"}>Next Question</button>
+              onClick={NextQuestion} disabled={!answered}>Next Question</button>
             <p className="text-center text-gray-400 text-sm ">Question {currentQuestion + 1} of {questions.length}</p>
           </div>
         }
